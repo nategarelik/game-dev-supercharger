@@ -1,0 +1,66 @@
+{
+  "name": "Batch 2D Asset Generation",
+  "nodes": [
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "prompt",
+              "value": "={{ $json.prompt }}"
+            },
+            {
+              "name": "style",
+              "value": "={{ $json.style }}"
+            }
+          ]
+        }
+      },
+      "name": "Set Parameters",
+      "type": "n8n-nodes-base.set",
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateImage",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "queryAuth",
+        "queryParameters": {
+          "parameter": [
+            {
+              "name": "key",
+              "value": "={{ $credentials.geminiApiKey }}"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 4
+            }
+          }
+        }
+      },
+      "name": "Generate with Gemini",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "filePath": "={{ $json.prompt.replace(' ', '_') }}_{{ $json.index }}.png",
+        "binaryData": "={{ $json.image_base64 }}"
+      },
+      "name": "Save Images",
+      "type": "n8n-nodes-base.writeFile",
+      "position": [650, 300]
+    }
+  ],
+  "connections": {
+    "Set Parameters": {
+      "main": [[{"node": "Generate with Gemini"}]]
+    },
+    "Generate with Gemini": {
+      "main": [[{"node": "Save Images"}]]
+    }
+  }
+}
