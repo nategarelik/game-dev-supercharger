@@ -1,0 +1,48 @@
+{
+  "name": "game-dev-supercharger",
+  "version": "1.0.0",
+  "description": "Universal Claude Code MCP plugin for professional 2D/3D Unity game development with multi-agent expert panel, automated asset generation, and performance validation",
+  "author": {
+    "name": "Retro Baseball Dev",
+    "email": "dev@retrobaseball.app",
+    "url": "https://github.com/nategarelik"
+  },
+  "homepage": "https://github.com/nategarelik/game-dev-supercharger",
+  "repository": "https://github.com/nategarelik/game-dev-supercharger",
+  "license": "MIT",
+  "keywords": [
+    "unity",
+    "game-development",
+    "mcp",
+    "asset-generation",
+    "performance",
+    "expert-panel"
+  ],
+  "mcpServers": {
+    "game-dev-supercharger": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "${CLAUDE_PLUGIN_ROOT}",
+        "run",
+        "--with",
+        "anthropic",
+        "--with",
+        "httpx",
+        "--with",
+        "pydantic",
+        "--with",
+        "requests",
+        "python",
+        "${CLAUDE_PLUGIN_ROOT}/mcp-server/server.py"
+      ],
+      "env": {
+        "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}",
+        "UNITY_MCP_URL": "http://localhost:8080/mcp",
+        "GEMINI_API_KEY": "${GEMINI_API_KEY:-}",
+        "LEONARDO_API_KEY": "${LEONARDO_API_KEY:-}",
+        "MESHY_API_KEY": "${MESHY_API_KEY:-}"
+      }
+    }
+  }
+}
