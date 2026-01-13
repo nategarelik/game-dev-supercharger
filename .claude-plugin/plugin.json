@@ -38,7 +38,7 @@
       ],
       "env": {
         "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}",
-        "UNITY_MCP_URL": "http://localhost:8080/mcp",
+        "UNITY_MCP_URL": "${UNITY_MCP_URL:-http://localhost:8080/mcp}",
         "GEMINI_API_KEY": "${GEMINI_API_KEY:-}",
         "LEONARDO_API_KEY": "${LEONARDO_API_KEY:-}",
         "MESHY_API_KEY": "${MESHY_API_KEY:-}"
